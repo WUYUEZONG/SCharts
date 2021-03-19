@@ -9,11 +9,17 @@ import UIKit
 
 protocol LineChartViewDelegate {
     //func bottomTitleHeihgt() -> CGFloat
+    func titleForValue(at index: Int) -> String
+    func colorForDot(at index: Int) -> UIColor
 }
 
 class LineChartView: UIView {
     
-    var delegate: LineChartViewDelegate?
+    var delegate: LineChartViewDelegate? {
+        didSet {
+            dataView.delegate = delegate
+        }
+    }
     
     var dataView = LineChartDataView()
     
@@ -38,7 +44,7 @@ class LineChartView: UIView {
         scroller.addSubview(dataView)
         scroller.backgroundColor = .white
         dataView.backgroundColor = .white
-        backgroundColor = .lightGray
+        backgroundColor = .white
     }
     
     override func draw(_ rect: CGRect) {
@@ -63,14 +69,14 @@ class LineChartView: UIView {
         
         let strAtt = [
             NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10),
-            NSAttributedString.Key.foregroundColor: UIColor.blue]
+            NSAttributedString.Key.foregroundColor: UIColor.black]
         for i in 0...level {
             let titleNum = perNum * Double(level - i)
             let title = NSString(format: "%.0f", titleNum)
             
             let tCalRect = title.boundingRect(with: CGSize(width: 36, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: strAtt, context: nil)
             
-            let x: CGFloat = leftMargin - tCalRect.width - 4
+            let x: CGFloat = leftMargin - tCalRect.width - 8
             let y = per * CGFloat(i) + 10 - tCalRect.height / 2
             
             let titleRect = CGRect(x: x, y: y, width: tCalRect.width, height: tCalRect.height)
@@ -80,6 +86,24 @@ class LineChartView: UIView {
         
     }
     
+    func showAnimation() {
+        
+        self.dataView.animation()
+        UIView.animate(withDuration: 1, delay: 0.2, options: [.curveEaseInOut]) {
+            self.scroller.setContentOffset(CGPoint(x: self.scroller.contentSize.width - self.scroller.frame.width, y: 0), animated: false)
+        } completion: { (f) in
+            if f {
+                UIView.animate(withDuration: 1, delay: 0.2, options: [.curveEaseInOut], animations: {
+                    self.scroller.setContentOffset(.zero, animated: false)
+                }, completion: nil)
+            }
+        }
+
+        
+        
+    }
+    
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         let edgeMargin: CGFloat = 12
@@ -88,11 +112,14 @@ class LineChartView: UIView {
         dataView.frame = CGRect(x: 0, y: 0, width: dataW, height: frame.height)
         scroller.contentSize = CGSize(width: dataW, height: frame.height)
         
+        
     }
 }
 
 
 class LineChartDataView: UIView {
+    
+    var delegate: LineChartViewDelegate?
     
     var datas: [Double] = [] {
         didSet {
@@ -108,7 +135,10 @@ class LineChartDataView: UIView {
     
     var circleRaduis: CGFloat = 4
     
-    var titles: [String] = []
+    var lineColor: UIColor = .black
+    
+    var isShowAnimation = true
+    
     
     private(set) var dots: [CAShapeLayer] = []
     
@@ -137,6 +167,20 @@ class LineChartDataView: UIView {
     private func initViews() {
         
         
+    }
+    
+    private var lineLayer: CAShapeLayer!
+    
+    func animation() {
+        if isShowAnimation {
+            let a = CABasicAnimation(keyPath: "strokeEnd")
+            a.fromValue = 0
+            a.toValue = 1
+            a.timingFunction = CAMediaTimingFunction(name: .linear)
+            a.duration = 1
+            a.fillMode = .forwards
+            lineLayer.add(a, forKey: nil)
+        }
     }
     
     override func draw(_ rect: CGRect) {
@@ -173,8 +217,8 @@ class LineChartDataView: UIView {
             
             let strAtt = [
                 NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10),
-                NSAttributedString.Key.foregroundColor: UIColor.blue]
-            let title = NSString(string: "标题")
+                NSAttributedString.Key.foregroundColor: UIColor.black]
+            let title = NSString(string: delegate?.titleForValue(at: index) ?? "")
             let tCalRect = title.boundingRect(with: CGSize(width: 36, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: strAtt, context: nil)
             
             let x = tCalRect.width / 2 + itemSpacing * CGFloat(index)
@@ -188,10 +232,11 @@ class LineChartDataView: UIView {
             let c = UIBezierPath(roundedRect: CGRect(x: x - circleRaduis, y: y - circleRaduis, width: circleRaduis * 2, height: circleRaduis * 2), cornerRadius: circleRaduis)
             let cs = CAShapeLayer()
             cs.path = c.cgPath
-            cs.fillColor = UIColor.systemBlue.cgColor
+            let dotColor = delegate?.colorForDot(at: index) ?? lineColor
+            cs.fillColor = dotColor.cgColor
             cs.shadowPath = c.cgPath
-            cs.shadowColor = UIColor.black.cgColor
-            cs.shadowRadius = 3
+            cs.shadowColor = dotColor.cgColor
+            cs.shadowRadius = 4
             cs.shadowOpacity = 0.2
             layer.addSublayer(cs)
             dots.append(cs)
@@ -206,29 +251,72 @@ class LineChartDataView: UIView {
         }
         
         
-        let bL = CAShapeLayer()
-        bL.path = b.cgPath
-        bL.lineWidth = 1
-        bL.lineJoin = .round
-        bL.strokeColor = UIColor.blue.cgColor
-        bL.fillColor = nil
-        layer.insertSublayer(bL, at: 0)
+        lineLayer = CAShapeLayer()
+        lineLayer.path = b.cgPath
+        lineLayer.lineWidth = 1
+        lineLayer.lineJoin = .round
+        lineLayer.strokeColor = lineColor.cgColor
+        lineLayer.fillColor = nil
+        lineLayer.strokeEnd = 1
+        
+        layer.insertSublayer(lineLayer, at: 0)
+        
+        
         
     }
+    
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        //let dataW = CGFloat(datas.count) * itemSpacing + 40
-//        dataView.frame = CGRect(x: 0, y: 0, width: dataW, height: frame.height)
-        //contentSize = CGSize(width: dataW, height: frame.height)
-//        translatesAutoresizingMaskIntoConstraints = false
-//        let wConstraint = self.constraints.filter { (item) -> Bool in
-//            return item.firstAttribute == .width
-//        }
-//        NSLayoutConstraint.deactivate(wConstraint)
-//        let w = CGFloat(datas.count - 1) * itemSpacing + 20
-//        NSLayoutConstraint.activate([widthAnchor.constraint(equalToConstant: w)])
+    }
+    
+    private var lastDot: CAShapeLayer?
+    
+    private func dotAnimation(_ dot: CAShapeLayer) {
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
+            if let path = dot.path {
+                dot.transform.m11 = 1.6
+                dot.transform.m22 = 1.6
+                dot.transform.m41 = (-path.boundingBox.minX - path.boundingBox.width / 2) * dot.transform.m11 + dot.path!.boundingBox.minX + path.boundingBox.width / 2
+                dot.transform.m42 = (-path.boundingBox.minY - path.boundingBox.height / 2) * dot.transform.m22 + path.boundingBox.minY + path.boundingBox.height / 2
+            }
+        }, completion: nil)
+        
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        
+        if let point = touches.first?.location(in: self) {
+            let dot = dots.first { (d) -> Bool in
+                if let path = d.path {
+                    let m: CGFloat = 30
+                    let x = path.boundingBox.minX - m
+                    let y = path.boundingBox.minY - m
+                    let w = path.boundingBox.maxX + m
+                    let h = path.boundingBox.maxY + m
+                    if x < point.x && y < point.y && point.x < w && point.y < h {
+                        return true
+                    } else {
+                        return false
+                    }
+                } else { return false }
+                
+            }
+            if let selectedDot = dot {
+                if let ld = lastDot, !ld.isEqual(selectedDot) {
+                    ld.transform = CATransform3DIdentity
+                }
+                lastDot = selectedDot
+                dotAnimation(selectedDot)
+            } else {
+                lastDot?.transform = CATransform3DIdentity
+            }
+        }
+        
     }
     
 }

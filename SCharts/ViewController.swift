@@ -13,12 +13,18 @@ class ViewController: UIViewController {
     
     var chartTitles = ["HorizonBarChartView", "LineChartView"]
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        
+        
     }
 
     let cellId = "UITableViewCellId"
+    
+    
 
 }
 
