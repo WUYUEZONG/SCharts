@@ -13,6 +13,10 @@
 		8A8DA4102604BF1900FF2A7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A8DA40E2604BF1900FF2A7B /* Main.storyboard */; };
 		8A8DA4122604BF1A00FF2A7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A8DA4112604BF1A00FF2A7B /* Assets.xcassets */; };
 		8A8DA4152604BF1A00FF2A7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A8DA4132604BF1A00FF2A7B /* LaunchScreen.storyboard */; };
+		8A8DA41F2604BF6F00FF2A7B /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA41D2604BF6F00FF2A7B /* LineChartView.swift */; };
+		8A8DA4202604BF6F00FF2A7B /* HorizonBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA41E2604BF6F00FF2A7B /* HorizonBarChartView.swift */; };
+		8A8DA4252604C1E100FF2A7B /* HorizonBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA4242604C1E100FF2A7B /* HorizonBarViewController.swift */; };
+		8A8DA4282604C57400FF2A7B /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA4272604C57400FF2A7B /* LineChartViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		8A8DA4112604BF1A00FF2A7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A8DA4142604BF1A00FF2A7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A8DA4162604BF1A00FF2A7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A8DA41D2604BF6F00FF2A7B /* LineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
+		8A8DA41E2604BF6F00FF2A7B /* HorizonBarChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizonBarChartView.swift; sourceTree = "<group>"; };
+		8A8DA4242604C1E100FF2A7B /* HorizonBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizonBarViewController.swift; sourceTree = "<group>"; };
+		8A8DA4272604C57400FF2A7B /* LineChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +64,27 @@
 		8A8DA4072604BF1900FF2A7B /* SCharts */ = {
 			isa = PBXGroup;
 			children = (
+				8A8DA4232604C1BB00FF2A7B /* Views */,
 				8A8DA4082604BF1900FF2A7B /* AppDelegate.swift */,
 				8A8DA40A2604BF1900FF2A7B /* SceneDelegate.swift */,
 				8A8DA40C2604BF1900FF2A7B /* ViewController.swift */,
+				8A8DA4242604C1E100FF2A7B /* HorizonBarViewController.swift */,
+				8A8DA4272604C57400FF2A7B /* LineChartViewController.swift */,
 				8A8DA40E2604BF1900FF2A7B /* Main.storyboard */,
 				8A8DA4112604BF1A00FF2A7B /* Assets.xcassets */,
 				8A8DA4132604BF1A00FF2A7B /* LaunchScreen.storyboard */,
 				8A8DA4162604BF1A00FF2A7B /* Info.plist */,
 			);
 			path = SCharts;
+			sourceTree = "<group>";
+		};
+		8A8DA4232604C1BB00FF2A7B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A8DA41E2604BF6F00FF2A7B /* HorizonBarChartView.swift */,
+				8A8DA41D2604BF6F00FF2A7B /* LineChartView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +159,11 @@
 			files = (
 				8A8DA40D2604BF1900FF2A7B /* ViewController.swift in Sources */,
 				8A8DA4092604BF1900FF2A7B /* AppDelegate.swift in Sources */,
+				8A8DA4202604BF6F00FF2A7B /* HorizonBarChartView.swift in Sources */,
 				8A8DA40B2604BF1900FF2A7B /* SceneDelegate.swift in Sources */,
+				8A8DA4252604C1E100FF2A7B /* HorizonBarViewController.swift in Sources */,
+				8A8DA4282604C57400FF2A7B /* LineChartViewController.swift in Sources */,
+				8A8DA41F2604BF6F00FF2A7B /* LineChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
