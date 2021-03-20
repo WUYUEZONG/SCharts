@@ -17,8 +17,9 @@ class VerticalBarViewController: UIViewController {
         
         chartView.dataView.chartDelegate = self
         chartView.dataView.datas = [73, 3, 1, 30, 22, 34, 10, 60, 28]
-//        chartView.dataView.barWidth = 4
         chartView.dataView.barColor = .systemTeal
+        chartView.dataView.itemSpacing = 60
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,6 +38,10 @@ extension VerticalBarViewController: VerticalBarChartViewDelegate {
     
     func colorForBar(at index: Int) -> UIColor {
         .systemBlue
+    }
+    
+    func didSelectBar(at index: Int, with value: Double) {
+        print("at: \(index), with: \(value)")
     }
     
     

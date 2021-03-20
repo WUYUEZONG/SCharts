@@ -7,9 +7,10 @@
 
 import UIKit
 
-protocol VerticalBarChartViewDelegate {
+@objc protocol VerticalBarChartViewDelegate {
     func titleForValue(at index: Int) -> String
     func colorForBar(at index: Int) -> UIColor
+    @objc optional func didSelectBar(at index: Int, with value: Double)
 }
 
 class VerticalBarDataView: UIView {
@@ -112,7 +113,7 @@ class VerticalBarDataView: UIView {
             
             
             let bRect = CGRect(x: x, y: y, width: barWidth, height: h)
-            let c = UIBezierPath(roundedRect: bRect, cornerRadius: 4)
+            let c = UIBezierPath(roundedRect: bRect, cornerRadius: 2)
             let cs = CAShapeLayer()
             cs.path = c.cgPath
             let bColor = chartDelegate?.colorForBar(at: index) ?? barColor
@@ -152,6 +153,15 @@ class VerticalBarDataView: UIView {
     private var lastBar: CAShapeLayer?
     
     private func setBarShadow(_ bar: CAShapeLayer) {
+        
+        
+        if let path = bar.path {
+            let index = Int((path.boundingBox.minX - barWidth / 2) / itemSpacing)
+            if index < datas.count {
+                chartDelegate?.didSelectBar?(at: index, with: datas[index])
+            }
+        }
+        
         
         bar.shadowPath = bar.path
         bar.shadowColor = UIColor.black.cgColor
