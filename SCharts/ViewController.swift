@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var chartTitles = ["HorizonBarChartView", "LineChartView"]
+    var chartTitles = ["HorizonBarChartView", "LineChartView", "VerticalBarDataView"]
 
     
     override func viewDidLoad() {
@@ -50,6 +50,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             show(h, sender: nil)
         case 1:
             show(loadViewController("LineChartViewController"), sender: nil)
+        case 2:
+            show(loadViewController("VerticalBarViewController"), sender: nil)
         default: break
         }
     }

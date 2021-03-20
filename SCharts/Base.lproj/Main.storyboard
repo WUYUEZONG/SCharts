@@ -107,6 +107,38 @@
             </objects>
             <point key="canvasLocation" x="2376.811594202899" y="75"/>
         </scene>
+        <!--Vertical Bar View Controller-->
+        <scene sceneID="SGT-vp-uRd">
+            <objects>
+                <viewController storyboardIdentifier="VerticalBarViewController" id="nxR-kn-dsW" customClass="VerticalBarViewController" customModule="SCharts" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JxV-Ge-9uC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fQW-8x-Af8" customClass="VerticalBarChartView" customModule="SCharts" customModuleProvider="target">
+                                <rect key="frame" x="20" y="303" width="374" height="300"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="qR8-ia-kUx"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="FX6-yZ-ctP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="FX6-yZ-ctP" firstAttribute="trailing" secondItem="fQW-8x-Af8" secondAttribute="trailing" constant="20" id="3rf-kO-30M"/>
+                            <constraint firstItem="fQW-8x-Af8" firstAttribute="centerY" secondItem="FX6-yZ-ctP" secondAttribute="centerY" id="TF5-8n-vzn"/>
+                            <constraint firstItem="fQW-8x-Af8" firstAttribute="leading" secondItem="FX6-yZ-ctP" secondAttribute="leading" constant="20" id="eNi-bK-0ng"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="chartView" destination="fQW-8x-Af8" id="TXr-3A-09N"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h1g-Oy-i87" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3065" y="76"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="h2u-fA-0Hq">
             <objects>

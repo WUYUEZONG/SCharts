@@ -18,6 +18,8 @@
 		8A8DA4252604C1E100FF2A7B /* HorizonBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA4242604C1E100FF2A7B /* HorizonBarViewController.swift */; };
 		8A8DA4282604C57400FF2A7B /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA4272604C57400FF2A7B /* LineChartViewController.swift */; };
 		8AA6316526059371007BFB5C /* ChartMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA6316426059371007BFB5C /* ChartMakerView.swift */; };
+		8AA631682605AB8D007BFB5C /* VerticalBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA631672605AB8D007BFB5C /* VerticalBarChartView.swift */; };
+		8AA6316B2605BBE3007BFB5C /* VerticalBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA6316A2605BBE3007BFB5C /* VerticalBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		8A8DA4242604C1E100FF2A7B /* HorizonBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizonBarViewController.swift; sourceTree = "<group>"; };
 		8A8DA4272604C57400FF2A7B /* LineChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
 		8AA6316426059371007BFB5C /* ChartMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMakerView.swift; sourceTree = "<group>"; };
+		8AA631672605AB8D007BFB5C /* VerticalBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalBarChartView.swift; sourceTree = "<group>"; };
+		8AA6316A2605BBE3007BFB5C /* VerticalBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,7 @@
 				8A8DA40C2604BF1900FF2A7B /* ViewController.swift */,
 				8A8DA4242604C1E100FF2A7B /* HorizonBarViewController.swift */,
 				8A8DA4272604C57400FF2A7B /* LineChartViewController.swift */,
+				8AA6316A2605BBE3007BFB5C /* VerticalBarViewController.swift */,
 				8A8DA40E2604BF1900FF2A7B /* Main.storyboard */,
 				8A8DA4112604BF1A00FF2A7B /* Assets.xcassets */,
 				8A8DA4132604BF1A00FF2A7B /* LaunchScreen.storyboard */,
@@ -86,6 +91,7 @@
 				8A8DA41E2604BF6F00FF2A7B /* HorizonBarChartView.swift */,
 				8A8DA41D2604BF6F00FF2A7B /* LineChartView.swift */,
 				8AA6316426059371007BFB5C /* ChartMakerView.swift */,
+				8AA631672605AB8D007BFB5C /* VerticalBarChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -167,6 +173,8 @@
 				8AA6316526059371007BFB5C /* ChartMakerView.swift in Sources */,
 				8A8DA4252604C1E100FF2A7B /* HorizonBarViewController.swift in Sources */,
 				8A8DA4282604C57400FF2A7B /* LineChartViewController.swift in Sources */,
+				8AA631682605AB8D007BFB5C /* VerticalBarChartView.swift in Sources */,
+				8AA6316B2605BBE3007BFB5C /* VerticalBarViewController.swift in Sources */,
 				8A8DA41F2604BF6F00FF2A7B /* LineChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
