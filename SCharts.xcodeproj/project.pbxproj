@@ -17,6 +17,7 @@
 		8A8DA4202604BF6F00FF2A7B /* HorizonBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA41E2604BF6F00FF2A7B /* HorizonBarChartView.swift */; };
 		8A8DA4252604C1E100FF2A7B /* HorizonBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA4242604C1E100FF2A7B /* HorizonBarViewController.swift */; };
 		8A8DA4282604C57400FF2A7B /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8DA4272604C57400FF2A7B /* LineChartViewController.swift */; };
+		8AA6316526059371007BFB5C /* ChartMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA6316426059371007BFB5C /* ChartMakerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		8A8DA41E2604BF6F00FF2A7B /* HorizonBarChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizonBarChartView.swift; sourceTree = "<group>"; };
 		8A8DA4242604C1E100FF2A7B /* HorizonBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizonBarViewController.swift; sourceTree = "<group>"; };
 		8A8DA4272604C57400FF2A7B /* LineChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
+		8AA6316426059371007BFB5C /* ChartMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartMakerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				8A8DA41E2604BF6F00FF2A7B /* HorizonBarChartView.swift */,
 				8A8DA41D2604BF6F00FF2A7B /* LineChartView.swift */,
+				8AA6316426059371007BFB5C /* ChartMakerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				8A8DA4092604BF1900FF2A7B /* AppDelegate.swift in Sources */,
 				8A8DA4202604BF6F00FF2A7B /* HorizonBarChartView.swift in Sources */,
 				8A8DA40B2604BF1900FF2A7B /* SceneDelegate.swift in Sources */,
+				8AA6316526059371007BFB5C /* ChartMakerView.swift in Sources */,
 				8A8DA4252604C1E100FF2A7B /* HorizonBarViewController.swift in Sources */,
 				8A8DA4282604C57400FF2A7B /* LineChartViewController.swift in Sources */,
 				8A8DA41F2604BF6F00FF2A7B /* LineChartView.swift in Sources */,

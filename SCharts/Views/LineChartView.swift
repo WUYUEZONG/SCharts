@@ -17,7 +17,7 @@ class LineChartView: UIView {
     
     var delegate: LineChartViewDelegate? {
         didSet {
-            dataView.delegate = delegate
+            dataView.chartDelegate = delegate
         }
     }
     
@@ -26,6 +26,8 @@ class LineChartView: UIView {
     var scroller = UIScrollView()
     
     var leftMargin: CGFloat = 24
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,13 +40,31 @@ class LineChartView: UIView {
     }
     
     func initViews() {
+        
+       
+        
         scroller.showsHorizontalScrollIndicator = false
         scroller.showsVerticalScrollIndicator = false
-        
+
         scroller.addSubview(dataView)
         scroller.backgroundColor = .white
         dataView.backgroundColor = .white
         backgroundColor = .white
+    }
+    
+    func showAnimation() {
+        
+        dataView.layerAnimation()
+        UIView.animate(withDuration: 1, delay: 0.2, options: [.curveEaseInOut]) {
+            self.scroller.setContentOffset(CGPoint(x: self.scroller.contentSize.width - self.frame.width, y: 0), animated: false)
+        } completion: { (f) in
+            if f {
+                UIView.animate(withDuration: 1, delay: 0.2, options: [.curveEaseInOut], animations: {
+                    self.scroller.setContentOffset(.zero, animated: false)
+                }, completion: nil)
+            }
+        }
+ 
     }
     
     override func draw(_ rect: CGRect) {
@@ -86,22 +106,7 @@ class LineChartView: UIView {
         
     }
     
-    func showAnimation() {
-        
-        self.dataView.animation()
-        UIView.animate(withDuration: 1, delay: 0.2, options: [.curveEaseInOut]) {
-            self.scroller.setContentOffset(CGPoint(x: self.scroller.contentSize.width - self.scroller.frame.width, y: 0), animated: false)
-        } completion: { (f) in
-            if f {
-                UIView.animate(withDuration: 1, delay: 0.2, options: [.curveEaseInOut], animations: {
-                    self.scroller.setContentOffset(.zero, animated: false)
-                }, completion: nil)
-            }
-        }
-
-        
-        
-    }
+    
     
     
     override func layoutSubviews() {
@@ -112,14 +117,13 @@ class LineChartView: UIView {
         dataView.frame = CGRect(x: 0, y: 0, width: dataW, height: frame.height)
         scroller.contentSize = CGSize(width: dataW, height: frame.height)
         
-        
     }
 }
 
 
 class LineChartDataView: UIView {
     
-    var delegate: LineChartViewDelegate?
+    var chartDelegate: LineChartViewDelegate?
     
     var datas: [Double] = [] {
         didSet {
@@ -129,7 +133,7 @@ class LineChartDataView: UIView {
     
     var numericalLevel = 4
     
-    var itemSpacing: CGFloat = 60
+    var itemSpacing: CGFloat = 50
     
     var bottomHeight: CGFloat = 30
     
@@ -138,6 +142,8 @@ class LineChartDataView: UIView {
     var lineColor: UIColor = .black
     
     var isShowAnimation = true
+    
+    var marker = ChartMakerView()
     
     
     private(set) var dots: [CAShapeLayer] = []
@@ -166,22 +172,25 @@ class LineChartDataView: UIView {
     
     private func initViews() {
         
-        
+        marker.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+        marker.isHidden = true
     }
     
     private var lineLayer: CAShapeLayer!
     
-    func animation() {
+    func layerAnimation() {
         if isShowAnimation {
             let a = CABasicAnimation(keyPath: "strokeEnd")
-            a.fromValue = 0
             a.toValue = 1
             a.timingFunction = CAMediaTimingFunction(name: .linear)
             a.duration = 1
+            a.isRemovedOnCompletion = false
             a.fillMode = .forwards
             lineLayer.add(a, forKey: nil)
         }
     }
+    
+    
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
@@ -191,6 +200,8 @@ class LineChartDataView: UIView {
                 s.removeFromSuperlayer()
             }
         }
+        
+        addSubview(marker)
         
         dots.removeAll()
         
@@ -218,7 +229,7 @@ class LineChartDataView: UIView {
             let strAtt = [
                 NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10),
                 NSAttributedString.Key.foregroundColor: UIColor.black]
-            let title = NSString(string: delegate?.titleForValue(at: index) ?? "")
+            let title = NSString(string: chartDelegate?.titleForValue(at: index) ?? "")
             let tCalRect = title.boundingRect(with: CGSize(width: 36, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: strAtt, context: nil)
             
             let x = tCalRect.width / 2 + itemSpacing * CGFloat(index)
@@ -232,7 +243,7 @@ class LineChartDataView: UIView {
             let c = UIBezierPath(roundedRect: CGRect(x: x - circleRaduis, y: y - circleRaduis, width: circleRaduis * 2, height: circleRaduis * 2), cornerRadius: circleRaduis)
             let cs = CAShapeLayer()
             cs.path = c.cgPath
-            let dotColor = delegate?.colorForDot(at: index) ?? lineColor
+            let dotColor = chartDelegate?.colorForDot(at: index) ?? lineColor
             cs.fillColor = dotColor.cgColor
             cs.shadowPath = c.cgPath
             cs.shadowColor = dotColor.cgColor
@@ -257,7 +268,7 @@ class LineChartDataView: UIView {
         lineLayer.lineJoin = .round
         lineLayer.strokeColor = lineColor.cgColor
         lineLayer.fillColor = nil
-        lineLayer.strokeEnd = 1
+        lineLayer.strokeEnd = isShowAnimation ? 0 : 1
         
         layer.insertSublayer(lineLayer, at: 0)
         
@@ -276,6 +287,21 @@ class LineChartDataView: UIView {
     
     private func dotAnimation(_ dot: CAShapeLayer) {
         
+        if let path = dot.path {
+            marker.direction = path.boundingBox.midY > frame.midY ? .up : .down
+            let x = path.boundingBox.midX - marker.frame.width / 2
+            var y: CGFloat = 0
+            switch marker.direction {
+            case .down:
+                y = path.boundingBox.midY - marker.raduis
+            case .up:
+                y = path.boundingBox.midY - marker.frame.height + marker.raduis
+            }
+            marker.frame.origin = CGPoint(x: x, y: y)
+            marker.isHidden = false
+        }
+        
+        
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
             if let path = dot.path {
                 dot.transform.m11 = 1.6
@@ -283,6 +309,8 @@ class LineChartDataView: UIView {
                 dot.transform.m41 = (-path.boundingBox.minX - path.boundingBox.width / 2) * dot.transform.m11 + dot.path!.boundingBox.minX + path.boundingBox.width / 2
                 dot.transform.m42 = (-path.boundingBox.minY - path.boundingBox.height / 2) * dot.transform.m22 + path.boundingBox.minY + path.boundingBox.height / 2
             }
+            
+            
         }, completion: nil)
         
     }
@@ -308,11 +336,13 @@ class LineChartDataView: UIView {
             }
             if let selectedDot = dot {
                 if let ld = lastDot, !ld.isEqual(selectedDot) {
+                    marker.isHidden = true
                     ld.transform = CATransform3DIdentity
                 }
                 lastDot = selectedDot
                 dotAnimation(selectedDot)
             } else {
+                marker.isHidden = true
                 lastDot?.transform = CATransform3DIdentity
             }
         }

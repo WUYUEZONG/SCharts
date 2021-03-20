@@ -14,7 +14,7 @@ class LineChartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        chart.dataView.delegate = self
+        chart.dataView.chartDelegate = self
         chart.dataView.datas = [73, 3, 1, 30, 22, 34, 10, 60, 28]
         chart.dataView.circleRaduis = 4
         chart.dataView.lineColor = .systemTeal
